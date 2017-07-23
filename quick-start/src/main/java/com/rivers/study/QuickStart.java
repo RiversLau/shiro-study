@@ -38,6 +38,7 @@ public class QuickStart {
             try {
                 currentUser.login(token);
             } catch (AuthenticationException ex) {
+                logger.error("异常信息：" + ex.getMessage());
                 logger.error("错误的用户名或密码");
             }
         }
