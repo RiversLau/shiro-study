@@ -11,6 +11,9 @@ import org.apache.shiro.util.Factory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Author: Rivers
  * Date: 2017/7/9 16:23
@@ -33,7 +36,7 @@ public class QuickStart {
         session.setAttribute("Hello", "Shiro");
 
         if (!currentUser.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken("rivers", "secret");
+            UsernamePasswordToken token = new UsernamePasswordToken("calabash", "warrior");
             token.setRememberMe(true);
             try {
                 currentUser.login(token);
@@ -47,8 +50,23 @@ public class QuickStart {
             logger.info("用户【" + currentUser.getPrincipal() + "】具有【admin】角色");
         }
 
+        List<String> roleList = new ArrayList<String>();
+        roleList.add("admin");
+        roleList.add("guest");
+        boolean[] results = currentUser.hasRoles(roleList);
+        for (int i = 0; i < results.length; i++) {
+            String tmp = results[i] ? "具有" : "不具有";
+            logger.info("用户【" + currentUser.getPrincipal() + tmp + "【" + roleList.get(i) + "】角色");
+        }
+
+        currentUser.checkRole("admin");
+
         if (currentUser.isPermitted("UserManagerment:deleteUser")) {
             logger.info("用户【" + currentUser.getPrincipal() + "】具有【UserManagerment:deleteUser】权限");
+        }
+
+        if (currentUser.isPermitted("UserManagerment:getUserInfo")) {
+            logger.info("用户【" + currentUser.getPrincipal() + "】具有【UserManagerment:getUserInfo】权限");
         }
 
         System.exit(0);
