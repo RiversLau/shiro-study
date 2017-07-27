@@ -11,7 +11,7 @@
     <title>登录页面</title>
 </head>
 <body>
-    <form action="/user/login">
+    <form action="/user/login" method="post">
         <input type="text" name="name" placeholder="用户名"/>
         <input type="text" name="password" placeholder="密码"/>
         <button type="submit">提交</button>

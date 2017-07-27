@@ -1,7 +1,54 @@
 <!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+
+    <display-name>Shiro Web Application</display-name>
+
+    <!-- EnvironmentLoaderListener默认创建IniWebEnvironment实例，可以通过
+         下面的配置，指定自己的WebEnvironment实例
+     -->
+    <!--<context-param>-->
+        <!--<param-name>shiroEnvironmentClass</param-name>-->
+        <!--<param-value>com.yoxiang.auth.MyWebEnvironment</param-value>-->
+    <!--</context-param>-->
+
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+
+    <!-- 登录Servlet -->
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>com.yoxiang.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <!-- 用户信息Servlet -->
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.yoxiang.servlet.UserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/user/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/user/info</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <!--session超时时间，单位分钟-->
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>
