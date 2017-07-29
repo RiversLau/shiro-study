@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <parent>
         <artifactId>shiro-study</artifactId>
         <groupId>com.rivers.study</groupId>
@@ -7,27 +8,16 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>shiro-web</artifactId>
+    <artifactId>shiro-spring</artifactId>
     <packaging>war</packaging>
-    <name>shiro-web Maven Webapp</name>
+    <name>shiro-spring Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-
     </dependencies>
 
     <build>
-        <finalName>shiro-web</finalName>
+        <finalName>shiro-spring</finalName>
     </build>
 </project>
