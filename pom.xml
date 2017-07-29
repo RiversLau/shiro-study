@@ -9,6 +9,7 @@
 
     <modules>
         <module>quick-start</module>
+        <module>shiro-web</module>
     </modules>
 
     <name>shiro-study Maven Webapp</name>
