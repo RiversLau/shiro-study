@@ -67,6 +67,13 @@
             <version>${jedis.version}</version>
         </dependency>
 
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.35</version>
+        </dependency>
+
         <!-- 日志框架 log4j 2, log4j 1.x已经终止更新 -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

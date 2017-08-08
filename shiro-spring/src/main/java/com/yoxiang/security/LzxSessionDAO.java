@@ -1,4 +1,4 @@
-package com.zhaoxiang.security;
+package com.yoxiang.security;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;

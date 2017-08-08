@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans">
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
     <bean id="poolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
@@ -7,10 +10,11 @@
     </bean>
 
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="poolConfig" ref="poolConfig"/>
         <constructor-arg name="host" value="${redis.host}"/>
         <constructor-arg name="port" value="${redis.port}"/>
+        <constructor-arg name="timeout" value="${redis.timeout}"/>
         <constructor-arg name="password" value="${redis.password}"/>
         <constructor-arg name="database" value="${redis.database}"/>
-        <constructor-arg name="poolConfig" ref="poolConfig"/>
     </bean>
 </beans>

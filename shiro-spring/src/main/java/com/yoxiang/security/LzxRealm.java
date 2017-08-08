@@ -1,4 +1,4 @@
-package com.zhaoxiang.security;
+package com.yoxiang.security;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
