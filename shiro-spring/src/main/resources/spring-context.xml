@@ -24,9 +24,22 @@
         </property>
     </bean>
 
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm"/>
+    <bean id="lzxRedisSessionDAO" class="com.zhaoxiang.security.LzxRedisSessionDAO"/>
+
+    <bean id="lzxSessionDAO" class="com.zhaoxiang.security.LzxSessionDAO">
+        <!-- 配置session id 生成器 -->
+        <constructor-arg name="lzxRedisSessionDAO" ref="lzxRedisSessionDAO"/>
     </bean>
 
-    <bean id="shiroRealm" class="com.zhaoxiang.security.LzxRealm"/>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="lzxSessionDAO"/>
+        <property name="globalSessionTimeout" value="3600000"/>
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="lzxRealm"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <bean id="lzxRealm" class="com.zhaoxiang.security.LzxRealm"/>
 </beans>
