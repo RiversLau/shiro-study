@@ -36,9 +36,23 @@
         <constructor-arg name="lzxRedisSessionDAO" ref="lzxRedisSessionDAO"/>
     </bean>
 
+    <!-- 可以自定义cookie，或者使用Shiro自带的cookie实现：SimpleCookie -->
+    <bean id="cookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- cookie名称 -->
+        <property name="name" value="session"/>
+        <property name="domain" value="localhost"/>
+        <property name="httpOnly" value="true"/>
+        <!-- cookie有效时间，单位秒 -->
+        <property name="maxAge" value="2000"/>
+    </bean>
+
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <property name="sessionDAO" ref="lzxSessionDAO"/>
         <property name="globalSessionTimeout" value="3600000"/>
+
+        <!-- 配置cookie，暂时关闭 -->
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="cookie"/>
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

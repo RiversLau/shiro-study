@@ -58,6 +58,7 @@ public class LoginServlet extends HttpServlet {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
         UsernamePasswordToken token = new UsernamePasswordToken(name, password);
+        token.setRememberMe(true);
 
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession(true);
