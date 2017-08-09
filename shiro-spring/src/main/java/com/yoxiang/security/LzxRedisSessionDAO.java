@@ -1,6 +1,5 @@
 package com.yoxiang.security;
 
-import com.alibaba.fastjson.JSONObject;
 import com.yoxiang.utils.LzxSerializationUtil;
 import org.apache.shiro.session.Session;
 import redis.clients.jedis.Jedis;

@@ -8,36 +8,81 @@ import java.io.*;
  */
 public class LzxSerializationUtil {
 
+    /**
+     * 序列化
+     * @param obj
+     * @return
+     */
     public static byte[] serialize(Object obj) {
+
+        if (obj == null) {
+            return null;
+        }
 
         byte[] bytes = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = null;
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos = new ObjectOutputStream(bos);
             oos.writeObject(obj);
             oos.flush();
             bytes = bos.toByteArray ();
-            oos.close();
-            bos.close();
         } catch (IOException ex) {
             ex.printStackTrace();
+        } finally {
+            if (oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return bytes;
     }
 
+    /**
+     * 反序列化
+     * @param bytes
+     * @return
+     */
     public static Object deserialize(byte[] bytes) {
 
+        if (bytes == null) {
+            return null;
+        }
+
         Object obj = null;
+        ByteArrayInputStream bis = null;
+        ObjectInputStream ois = null;
         try {
-            ByteArrayInputStream bis = new ByteArrayInputStream (bytes);
-            ObjectInputStream ois = new ObjectInputStream (bis);
+            bis = new ByteArrayInputStream (bytes);
+            ois = new ObjectInputStream (bis);
             obj = ois.readObject();
-            ois.close();
-            bis.close();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+        } finally {
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ois != null) {
+                try {
+                    ois.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return obj;
     }

@@ -67,11 +67,11 @@
             <version>${jedis.version}</version>
         </dependency>
 
-        <!-- fastjson -->
+        <!-- kryo序列化工具 -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.35</version>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>4.0.0</version>
         </dependency>
 
         <!-- 日志框架 log4j 2, log4j 1.x已经终止更新 -->
