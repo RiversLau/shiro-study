@@ -16,6 +16,14 @@
         <!--<param-value>com.yoxiang.auth.MyWebEnvironment</param-value>-->
     <!--</context-param>-->
 
+    <!-- IniWebEnvironment默认从/WEB-INF/shiro.ini、classpath:shiro.ini加载shiro配置文件，
+         可以通过下面的配置，指定配置文件位置
+     -->
+    <!--<context-param>-->
+        <!--<param-name>shiroConfigLocations</param-name>-->
+        <!--<param-value>/WEB-INF/shiro.ini</param-value>-->
+    <!--</context-param>-->
+
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>

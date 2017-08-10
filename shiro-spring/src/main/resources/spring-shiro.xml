@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+
+        <property name="securityManager" ref="securityManager"/>
+
+        <property name="loginUrl" value="/login.jsp"/>
+        <property name="successUrl" value="/home.jsp"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+
+        <!-- The 'filters' property is not necessary since any declared javax.servlet.Filter bean  -->
+        <!-- defined will be automatically acquired and available via its beanName in chain        -->
+        <!-- definitions, but you can perform instance overrides or name aliases here if you like: -->
+        <!-- <property name="filters">
+            <util:map>
+                <entry key="anAlias" value-ref="someFilter"/>
+            </util:map>
+        </property> -->
+        <property name="filterChainDefinitions">
+            <value>
+                /index.jsp = anon
+            </value>
+        </property>
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="lzxRealm"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="ecacheManager"/>
+    </bean>
+
+    <bean id="ecacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <!-- 自定义的Realm实现 -->
+    <bean id="lzxRealm" class="com.yoxiang.security.LzxRealm">
+
+    </bean>
+
+    <!-- 使用Shiro自带的DefaultWebSessionManager,该实现使用Shiro Native Session -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="lzxSessionDAO"/>
+        <property name="globalSessionTimeout" value="3600000"/>
+
+        <!-- 配置cookie-->
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="cookie"/>
+    </bean>
+
+    <bean id="lzxSessionDAO" class="com.yoxiang.security.LzxSessionDAO">
+        <constructor-arg name="lzxSessionRedisDAO" ref="lzxSessionRedisDAO"/>
+        <!-- 配置session id 生成器，默认UUID -->
+        <!--<property name="sessionIdGenerator" ref=""/>-->
+    </bean>
+
+    <!-- 基于Redis的Session存储实现 -->
+    <bean id="lzxSessionRedisDAO" class="com.yoxiang.security.LzxSessionRedisDAO">
+        <property name="jedisPool" ref="jedisPool"/>
+        <property name="sessionTimeout" value="3600"/>
+        <property name="sessionSerializer" ref="fstSessionSerializer"/>
+    </bean>
+
+    <!-- Shiro Session序列化实现器 -->
+    <bean id="fstSessionSerializer" class="com.yoxiang.serialization.FSTSessionSerializer"/>
+
+    <!-- 可以自定义cookie，或者使用Shiro自带的cookie实现：SimpleCookie -->
+    <bean id="cookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- cookie名称 -->
+        <property name="name" value="session"/>
+        <property name="domain" value="localhost"/>
+        <property name="httpOnly" value="true"/>
+        <!-- cookie有效时间，单位秒 -->
+        <property name="maxAge" value="2000"/>
+    </bean>
+</beans>
