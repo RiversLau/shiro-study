@@ -30,10 +30,15 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="lzxRealm"/>
         <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="ecacheManager"/>
     </bean>
 
+    <bean id="ecacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
     <!-- 自定义的Realm实现 -->
-    <bean id="lzxRealm" class="com.yoxiang.security.LzxRealm"/>
+    <bean id="lzxRealm" class="com.yoxiang.security.LzxRealm">
+
+    </bean>
 
     <!-- 使用Shiro自带的DefaultWebSessionManager,该实现使用Shiro Native Session -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
