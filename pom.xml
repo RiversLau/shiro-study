@@ -67,11 +67,18 @@
             <version>${jedis.version}</version>
         </dependency>
 
-        <!-- kryo序列化工具 -->
+        <!-- kryo序列化 -->
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
             <version>4.0.0</version>
+        </dependency>
+
+        <!-- fast-serialization序列化 -->
+        <dependency>
+            <groupId>de.ruedigermoeller</groupId>
+            <artifactId>fst</artifactId>
+            <version>2.52</version>
         </dependency>
 
         <!-- 日志框架 log4j 2, log4j 1.x已经终止更新 -->

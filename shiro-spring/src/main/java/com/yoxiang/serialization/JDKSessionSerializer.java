@@ -1,21 +1,24 @@
-package com.yoxiang.utils;
+package com.yoxiang.serialization;
 
 import java.io.*;
 
 /**
+ * 基于JDK输入输出流的序列化、反序列化实现
+ * ByteArrayInputStream、ByteArrayOutputStream、ObjectInputStream、ObjectOutputStream
+ *
  * Author: RiversLau
- * Date: 2017/8/8 17:16
+ * Date: 2017/8/10 10:42
  */
-public class LzxSerializationUtil {
+public class JDKSessionSerializer implements SessionSerializer {
 
     /**
      * 序列化
-     * @param obj
+     * @param object
      * @return
      */
-    public static byte[] serialize(Object obj) {
+    public byte[] serialize(Object object) {
 
-        if (obj == null) {
+        if (object == null) {
             return null;
         }
 
@@ -24,7 +27,7 @@ public class LzxSerializationUtil {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(bos);
-            oos.writeObject(obj);
+            oos.writeObject(object);
             oos.flush();
             bytes = bos.toByteArray ();
         } catch (IOException ex) {
@@ -53,7 +56,7 @@ public class LzxSerializationUtil {
      * @param bytes
      * @return
      */
-    public static Object deserialize(byte[] bytes) {
+    public Object deserialize(byte[] bytes) {
 
         if (bytes == null) {
             return null;
