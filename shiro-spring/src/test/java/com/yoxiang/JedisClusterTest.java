@@ -24,7 +24,7 @@ public class JedisClusterTest {
         int connTimeout = 2000;
         int soTimeout = 2000;
         int maxAttempts = 3;
-        String password = "zhaoxiang@85&35";
+        String password = "xx.xx.xx.xx";
 
         JedisPoolConfig gPoolConfig = new JedisPoolConfig();
         gPoolConfig.setMaxIdle(100);
