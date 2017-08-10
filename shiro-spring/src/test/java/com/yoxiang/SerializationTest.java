@@ -1,5 +1,8 @@
 package com.yoxiang;
 
+import com.yoxiang.serialization.FSTSessionSerializer;
+import com.yoxiang.serialization.JDKSessionSerializer;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SimpleSession;
 import org.junit.Test;
 
@@ -40,8 +43,18 @@ public class SerializationTest {
         simpleSession.setAttribute("double", 3.58);
 
         long start = System.currentTimeMillis();
+        JDKSessionSerializer serializer = new JDKSessionSerializer();
+        byte[] bytes = serializer.serialize(simpleSession);
 
-        System.out.println("Kryo cunsumed " + (System.currentTimeMillis() - start));
+        System.out.println("JDK serialization lenth is " + bytes.length + ", time consumed " + (System.currentTimeMillis() - start));
+
+        start = System.currentTimeMillis();
+        Session session = (Session) serializer.deserialize(bytes);
+        System.out.println("JDK deserialization time consumed " + (System.currentTimeMillis() - start));
+
+        if (session instanceof SimpleSession) {
+            System.out.println("JDK deserialization successfully!");
+        }
     }
 
     @Test
@@ -56,7 +69,17 @@ public class SerializationTest {
         simpleSession.setAttribute("double", 3.58);
 
         long start = System.currentTimeMillis();
+        FSTSessionSerializer serializer = new FSTSessionSerializer();
+        byte[] bytes = serializer.serialize(simpleSession);
 
-        System.out.println("Fst deserialize consumed " + (System.currentTimeMillis() - start));
+        System.out.println("Fst serialization length is " + bytes.length + ", time consumed " + (System.currentTimeMillis() - start));
+
+        start = System.currentTimeMillis();
+        Session session = (Session) serializer.deserialize(bytes);
+        System.out.println("Fst deserialization time consumed " + (System.currentTimeMillis() - start));
+
+        if (session instanceof SimpleSession) {
+            System.out.println("Fst deserialization successfully!");
+        }
     }
 }
