@@ -14,7 +14,7 @@ import java.util.Set;
  * Author: RiversLau
  * Date: 2017/8/8 11:00
  */
-public class LzxRedisSessionDAO {
+public class LzxSessionRedisDAO {
 
     private static final String SESSION_PREFIX = "SESSION:";
 

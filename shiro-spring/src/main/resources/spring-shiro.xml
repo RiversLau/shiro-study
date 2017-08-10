@@ -46,13 +46,13 @@
     </bean>
 
     <bean id="lzxSessionDAO" class="com.yoxiang.security.LzxSessionDAO">
-        <constructor-arg name="lzxRedisSessionDAO" ref="lzxRedisSessionDAO"/>
+        <constructor-arg name="lzxSessionRedisDAO" ref="lzxSessionRedisDAO"/>
         <!-- 配置session id 生成器，默认UUID -->
         <!--<property name="sessionIdGenerator" ref=""/>-->
     </bean>
 
     <!-- 基于Redis的Session存储实现 -->
-    <bean id="lzxRedisSessionDAO" class="com.yoxiang.security.LzxRedisSessionDAO">
+    <bean id="lzxSessionRedisDAO" class="com.yoxiang.security.LzxSessionRedisDAO">
         <property name="jedisPool" ref="jedisPool"/>
         <property name="sessionTimeout" value="3600"/>
         <property name="sessionSerializer" ref="fstSessionSerializer"/>

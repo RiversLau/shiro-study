@@ -13,10 +13,10 @@ import java.util.Collection;
  */
 public class LzxSessionDAO extends AbstractSessionDAO {
 
-    private LzxRedisSessionDAO lzxRedisSessionDAO;
+    private LzxSessionRedisDAO lzxSessionRedisDAO;
 
-    public LzxSessionDAO(LzxRedisSessionDAO lzxRedisSessionDAO) {
-        this.lzxRedisSessionDAO = lzxRedisSessionDAO;
+    public LzxSessionDAO(LzxSessionRedisDAO lzxSessionRedisDAO) {
+        this.lzxSessionRedisDAO = lzxSessionRedisDAO;
     }
 
     /**
@@ -29,7 +29,7 @@ public class LzxSessionDAO extends AbstractSessionDAO {
         Serializable sessionID = generateSessionId(session);
         assignSessionId(session, sessionID);
 
-        lzxRedisSessionDAO.put(session);
+        lzxSessionRedisDAO.put(session);
         return sessionID;
     }
 
@@ -40,7 +40,7 @@ public class LzxSessionDAO extends AbstractSessionDAO {
      */
     protected Session doReadSession(Serializable sessionId) {
 
-        return lzxRedisSessionDAO.readSession(sessionId);
+        return lzxSessionRedisDAO.readSession(sessionId);
     }
 
     /**
@@ -50,7 +50,7 @@ public class LzxSessionDAO extends AbstractSessionDAO {
      */
     public void update(Session session) throws UnknownSessionException {
 
-        lzxRedisSessionDAO.put(session);
+        lzxSessionRedisDAO.put(session);
     }
 
     /**
@@ -59,7 +59,7 @@ public class LzxSessionDAO extends AbstractSessionDAO {
      */
     public void delete(Session session) {
 
-        lzxRedisSessionDAO.delete(session);
+        lzxSessionRedisDAO.delete(session);
     }
 
     /**
@@ -68,6 +68,6 @@ public class LzxSessionDAO extends AbstractSessionDAO {
      */
     public Collection<Session> getActiveSessions() {
 
-        return lzxRedisSessionDAO.listActives();
+        return lzxSessionRedisDAO.listActives();
     }
 }
