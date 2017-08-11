@@ -11,7 +11,6 @@
         <property name="loginUrl" value="/login.jsp"/>
         <property name="successUrl" value="/home.jsp"/>
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
-
         <!-- The 'filters' property is not necessary since any declared javax.servlet.Filter bean  -->
         <!-- defined will be automatically acquired and available via its beanName in chain        -->
         <!-- definitions, but you can perform instance overrides or name aliases here if you like: -->
@@ -23,6 +22,9 @@
         <property name="filterChainDefinitions">
             <value>
                 /index.jsp = anon
+                /login.jsp = anon
+                /user/login = anon
+                /home.jsp = authc
             </value>
         </property>
     </bean>
@@ -30,14 +32,15 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="lzxRealm"/>
         <property name="sessionManager" ref="sessionManager"/>
-        <property name="cacheManager" ref="ecacheManager"/>
+        <property name="cacheManager" ref="lzxCacheManager"/>
     </bean>
 
-    <bean id="ecacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
-
-    <!-- 自定义的Realm实现 -->
+    <!-- 自定义的Realm实现，并开启认证授权缓存策略以及制定认证授权缓存名称 -->
     <bean id="lzxRealm" class="com.yoxiang.security.LzxRealm">
-
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authentication_cache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorization_cache"/>
     </bean>
 
     <!-- 使用Shiro自带的DefaultWebSessionManager,该实现使用Shiro Native Session -->
@@ -46,8 +49,17 @@
         <property name="globalSessionTimeout" value="3600000"/>
 
         <!-- 配置cookie-->
-        <property name="sessionIdCookieEnabled" value="true"/>
-        <property name="sessionIdCookie" ref="cookie"/>
+        <!--<property name="sessionIdCookieEnabled" value="true"/>-->
+        <!--<property name="sessionIdCookie" ref="cookie"/>-->
+    </bean>
+
+    <!-- Shiro Cache自定义实现 -->
+    <bean id="lzxCacheManager" class="com.yoxiang.cache.LzxCacheManager">
+        <property name="lzxCacheRedisDAO" ref="lzxCacheRedisDAO"/>
+    </bean>
+    <bean id="lzxCacheRedisDAO" class="com.yoxiang.cache.LzxCacheRedisDAO">
+        <property name="sessionSerializer" ref="fstSessionSerializer"/>
+        <property name="jedisPool" ref="jedisPool"/>
     </bean>
 
     <bean id="lzxSessionDAO" class="com.yoxiang.security.LzxSessionDAO">

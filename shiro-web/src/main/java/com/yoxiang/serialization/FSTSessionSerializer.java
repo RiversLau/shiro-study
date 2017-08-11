@@ -1,6 +1,5 @@
 package com.yoxiang.serialization;
 
-import com.yoxiang.cache.LzxCacheRedisDAO;
 import org.apache.shiro.session.mgt.SimpleSession;
 import org.nustaq.serialization.FSTConfiguration;
 
@@ -15,7 +14,6 @@ public class FSTSessionSerializer implements SessionSerializer {
 
     public FSTSessionSerializer() {
         conf.registerClass(SimpleSession.class);
-        conf.registerClass(LzxCacheRedisDAO.LzxCache.class);
     }
 
     public byte[] serialize(Object object) {

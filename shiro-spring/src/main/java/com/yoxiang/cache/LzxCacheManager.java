@@ -1,23 +1,29 @@
-package com.yoxiang.security;
+package com.yoxiang.cache;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.util.Destroyable;
 
 /**
  * Author: RiversLau
- * Date: 2017/8/10 17:49
+ * Date: 2017/8/11 10:10
  */
 public class LzxCacheManager implements CacheManager {
 
+    // 基于Redis的缓存存取DAO
     private LzxCacheRedisDAO lzxCacheRedisDAO;
 
-    public LzxCacheManager(LzxCacheRedisDAO lzxCacheRedisDAO) {
+    public void setLzxCacheRedisDAO(LzxCacheRedisDAO lzxCacheRedisDAO) {
         this.lzxCacheRedisDAO = lzxCacheRedisDAO;
     }
 
     public <K, V> Cache<K, V> getCache(String name) throws CacheException {
 
-        return null;
+        Cache<K, V> cache = lzxCacheRedisDAO.doGetCache(name);
+        if (cache == null) {
+            cache = lzxCacheRedisDAO.doCreateCache(name);
+        }
+        return cache;
     }
 }

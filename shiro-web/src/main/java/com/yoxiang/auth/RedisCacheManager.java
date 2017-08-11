@@ -31,7 +31,6 @@ public class RedisCacheManager implements CacheManager, Destroyable {
 
         RedisCache cache = redisManager.getRedisCache(name);
         if (cache == null) {
-            logger.info(">>>>>> Cache named " + name + " does not exist. Create now!");
             cache = redisManager.createCache(name);
         }
         return cache;
