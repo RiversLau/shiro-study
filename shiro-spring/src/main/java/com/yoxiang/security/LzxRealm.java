@@ -33,7 +33,7 @@ public class LzxRealm extends AuthorizingRealm {
      */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
-        Subject currentUser = SecurityUtils.getSubject();
+        SecurityUtils.getSubject();
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Set<String> roleSet = new HashSet<String>();
