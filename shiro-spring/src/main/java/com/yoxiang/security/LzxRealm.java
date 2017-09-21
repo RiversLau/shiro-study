@@ -37,9 +37,10 @@ public class LzxRealm extends AuthorizingRealm {
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Set<String> roleSet = new HashSet<String>();
-        roleSet.add("Capatian");
-        roleSet.add("Officer");
-        authorizationInfo.setRoles(roleSet);
+        roleSet.add("Captains");
+        roleSet.add("Officers");
+//        authorizationInfo.setRoles(roleSet);
+        authorizationInfo.addRoles(roleSet);
 
         return authorizationInfo;
     }

@@ -4,6 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,9 @@ public class LoginServlet extends HttpServlet {
                 logger.error(">>>>>>>>>>>>> authenticate error occured, exception :" + ex.getMessage());
             }
         }
+
+        PrincipalCollection principalCollection = subject.getPrincipals();
+        System.out.println(principalCollection.getPrimaryPrincipal());
 
         logger.info(">>>>>>>>>>>>> user login finish <<<<<<<<<<<<<<");
         resp.sendRedirect("/home.jsp");
