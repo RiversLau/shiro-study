@@ -4,6 +4,7 @@ import com.yoxiang.serialization.SessionSerializer;
 import org.apache.shiro.session.Session;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,6 +1,5 @@
 package com.yoxiang;
 
-import com.yoxiang.cache.LzxCacheRedisDAO;
 import com.yoxiang.serialization.FSTSessionSerializer;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;

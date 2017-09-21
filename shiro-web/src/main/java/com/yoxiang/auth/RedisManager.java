@@ -6,8 +6,6 @@ import redis.clients.jedis.Jedis;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.sun.corba.se.impl.util.RepositoryId.cache;
-
 /**
  * Author: RiversLau
  * Date: 2017/7/31 17:40
