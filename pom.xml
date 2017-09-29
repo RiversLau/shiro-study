@@ -11,6 +11,7 @@
         <module>quick-start</module>
         <module>shiro-web</module>
         <module>shiro-spring</module>
+        <module>shiro-lau</module>
     </modules>
 
     <name>shiro-study Maven Webapp</name>
