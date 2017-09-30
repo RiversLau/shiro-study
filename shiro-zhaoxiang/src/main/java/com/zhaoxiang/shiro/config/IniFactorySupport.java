@@ -2,6 +2,7 @@ package com.zhaoxiang.shiro.config;
 
 import com.zhaoxiang.shiro.util.AbstractFactory;
 import com.zhaoxiang.shiro.io.ResourceUtils;
+import com.zhaoxiang.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,12 @@ public abstract class IniFactorySupport<T> extends AbstractFactory<T> {
 
         Ini ini = null;
         if (ResourceUtils.resourceExists(DEFAULT_INI_RESOURCE_PATH)) {
-
+            log.debug("Found shiro.ini at the root of the classpath.");
+            ini = new Ini();
+//            ini.loadFromPath(DEFAULT_INI_RESOURCE_PATH);
+            if (CollectionUtils.isEmpty(ini)) {
+                log.warn("shiro.ini found at the root of the classpath, but it did not contain any data.");
+            }
         }
         return ini;
     }

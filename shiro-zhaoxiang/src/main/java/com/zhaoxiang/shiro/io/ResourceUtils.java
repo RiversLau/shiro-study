@@ -4,8 +4,11 @@ import com.zhaoxiang.shiro.util.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Author: RiversLau
@@ -52,19 +55,35 @@ public class ResourceUtils {
         return exists;
     }
 
-    private static InputStream getInputStreamFromPath(String resourcePath) {
+    private static InputStream getInputStreamFromPath(String resourcePath) throws IOException {
 
-        InputStream is = null;
+        InputStream is;
         if (resourcePath.startsWith(CLASSPATH_PREFIX)) {
             is = loadFromClassPath(stripPrefix(CLASSPATH_PREFIX));
         } else if (resourcePath.startsWith(URL_PREFIX)) {
-//            is = ;
+            is = loadFromUrl(stripPrefix(resourcePath));
         } else if (resourcePath.startsWith(FILE_PREFIX)) {
-//            is = ;
+            is = loadFromFile(stripPrefix(resourcePath));
         } else {
-//            is = ;
+            is = loadFromFile(stripPrefix(resourcePath));
         }
+
+        if (is == null) {
+            throw new IOException("Resource [" +resourcePath + "] cannot be found.");
+        }
+
         return is;
+    }
+
+    private static InputStream loadFromFile(String path) throws IOException {
+        log.debug("Opening file [" + path + "]...");
+        return new FileInputStream(path);
+    }
+
+    private static InputStream loadFromUrl(String urlPath) throws IOException {
+        log.debug("Opening url [{}]", urlPath);
+        URL url = new URL(urlPath);
+        return url.openStream();
     }
 
     private static InputStream loadFromClassPath(String path) {
@@ -74,5 +93,15 @@ public class ResourceUtils {
 
     private static String stripPrefix(String resourcePath) {
         return resourcePath.substring(resourcePath.indexOf(":") + 1);
+    }
+
+    public static void close(InputStream is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (IOException e) {
+                log.warn("Error closing input stream.", e);
+            }
+        }
     }
 }

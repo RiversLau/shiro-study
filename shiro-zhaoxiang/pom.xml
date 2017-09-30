@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>shiro-lau</artifactId>
+    <artifactId>shiro-zhaoxiang</artifactId>
     <packaging>jar</packaging>
 
-    <name>shiro-lau</name>
+    <name>shiro-zhaoxiang</name>
     <url>http://maven.apache.org</url>
 
     <properties>
